@@ -26,7 +26,7 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode(window_size)
     grid = pygame.Surface((window_w//4, window_h//4)).convert_alpha()
     grid.fill(white)
-    h = hexSheet.Hex(pygame.image.load("../images/hex-tiles.png"))
+    h = hexSheet.HexSheet(pygame.image.load("../images/hex-tiles.png"))
 
     while 1:
         for event in pygame.event.get():

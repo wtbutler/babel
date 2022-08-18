@@ -1,7 +1,14 @@
 import pygame
 tile_size = X, Y = 26, 22
 
-class T:
+class Hexagon:
+    def __init__(self, pos):
+        self.pos = pos
+        self.sprite = (0, 0)
+        self.openings = {"N", "NE", "S", "SW"}
+        self.orientation = "N"
+        self.neighbors = {}
+        self.optional_openings = {"U"}
     CIRCLE = (0, 2)
     BLANK = (0, 1)
     HS_N = (1, 0)
@@ -13,6 +20,8 @@ class T:
     HB_S = (2, 3)
     HB_SW = (2, 4)
     HB_NW = (2, 5)
+    HW_N = (0, 3)
+    HW_S = (0, 4)
     B_N = (3, 0)
     B_NE = (3, 1)
     B_SE = (3, 2)
@@ -20,7 +29,30 @@ class T:
     B_SW = (3, 4)
     B_NW = (3, 5)
 
-class Hex:
+class StraightHallway(Hexagon):
+    def __init__(self, pos, orientation):
+        self.pos = pos
+        self.optional_openings = {"U", "D"}
+        if orientation == "N" or orientation == "S":
+            self.sprite = (1, 0)
+            self.orientation = "N"
+            self.openings = {"N", "S"}
+        elif orientation == "NE" or orientation == "SW":
+            self.sprite = (1, 1)
+            self.orientation = "NE"
+            self.openings = {"NE", "SW"}
+        elif orientation == "SE" or orientation == "NW":
+            self.sprite = (1, 2)
+            self.orientation = "SE"
+            self.openings = {"SE", "NW"}
+        else:
+            raise WrongOrientationError
+
+    def requirements(self):
+        # Must have at least one stairway connection
+        return
+
+class HexSheet:
     def draw_sheet(self, screen):
         #screen.blit(self.hexx, (0, 0))
         #return
@@ -34,7 +66,7 @@ class Hex:
         self.hexrect = self.hexx.get_rect()
         self.sheet = [  
                         [T.HS_SE, T.CIRCLE, T.B_N, T.B_SE],
-                        [T.B_N,  T.HB_NW, T.BLANK, T.B_NW],
+                        [T.B_N,  T.HW_S, T.CIRCLE, T.B_NW],
                         [T.B_SE, T.B_S, T.HB_N, T.BLANK],
                         [T.CIRCLE, T.B_SW, T.BLANK, T.BLANK]
                     ]
