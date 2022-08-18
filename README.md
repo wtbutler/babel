@@ -1,6 +1,17 @@
 <!-- Required extensions: markdown_checklist.extension -->
 
-# TODO
+## Thought 2
+### Notes
+ * Library of Babel
+ * Hex tiles
+     * Procedural generation?
+     * Pre generation?
+ * 
+
+
+## Thought 1
+
+### TODO
  * [ ] Character location tracker
  * [ ] Character movement
         - Characters interacting in the bg
