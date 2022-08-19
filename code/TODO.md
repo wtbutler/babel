@@ -26,5 +26,6 @@
         * Just keep track of neighbors and use some BFS algorithm to see nearby rooms?
         * Use a 'chunk' system?
             * Chunks with vertical slices as well?
+            * Just slices, not vertical chunks?
             * triangular or rhomboid?
                 * rhomboid tiles cleanly, but triangular loads less

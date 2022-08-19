@@ -1,56 +1,13 @@
+from hexTiles.Defaults import Defaults as D
 import pygame
 tile_size = X, Y = 26, 22
 
-class Hexagon:
-    def __init__(self, pos):
-        self.pos = pos
-        self.sprite = (0, 0)
-        self.openings = {"N", "NE", "S", "SW"}
-        self.orientation = "N"
+class T:
+    def __init__(self, shape=None):
+        self.pos = (0, 0)
         self.neighbors = {}
-        self.optional_openings = {"U"}
-    CIRCLE = (0, 2)
-    BLANK = (0, 1)
-    HS_N = (1, 0)
-    HS_NE = (1, 1)
-    HS_SE = (1, 2)
-    HB_N = (2, 0)
-    HB_NE = (2, 1)
-    HB_SE = (2, 2)
-    HB_S = (2, 3)
-    HB_SW = (2, 4)
-    HB_NW = (2, 5)
-    HW_N = (0, 3)
-    HW_S = (0, 4)
-    B_N = (3, 0)
-    B_NE = (3, 1)
-    B_SE = (3, 2)
-    B_S = (3, 3)
-    B_SW = (3, 4)
-    B_NW = (3, 5)
-
-class StraightHallway(Hexagon):
-    def __init__(self, pos, orientation):
-        self.pos = pos
-        self.optional_openings = {"U", "D"}
-        if orientation == "N" or orientation == "S":
-            self.sprite = (1, 0)
-            self.orientation = "N"
-            self.openings = {"N", "S"}
-        elif orientation == "NE" or orientation == "SW":
-            self.sprite = (1, 1)
-            self.orientation = "NE"
-            self.openings = {"NE", "SW"}
-        elif orientation == "SE" or orientation == "NW":
-            self.sprite = (1, 2)
-            self.orientation = "SE"
-            self.openings = {"SE", "NW"}
-        else:
-            raise WrongOrientationError
-
-    def requirements(self):
-        # Must have at least one stairway connection
-        return
+        self.options = set()
+        self.shape = shape
 
 class HexSheet:
     def draw_sheet(self, screen):
@@ -58,17 +15,21 @@ class HexSheet:
         #return
         for j, row in enumerate(self.sheet):
             #for tile in row:
-            for i, (y, x) in enumerate(row):
+            for i, t in enumerate(row):
+                if not self.drawn: print(t.shape)
+                y, x = t.shape.sprite
                 screen.blit(self.tiles[y][x], (i*(X-6), j*Y + i*(Y/2)))
+        self.drawn = True
 
     def __init__(self, tilesheet):
+        self.drawn = False
         self.hexx = tilesheet.convert_alpha()
         self.hexrect = self.hexx.get_rect()
         self.sheet = [  
-                        [T.HS_SE, T.CIRCLE, T.B_N, T.B_SE],
-                        [T.B_N,  T.HW_S, T.CIRCLE, T.B_NW],
-                        [T.B_SE, T.B_S, T.HB_N, T.BLANK],
-                        [T.CIRCLE, T.B_SW, T.BLANK, T.BLANK]
+                        [T(D.Straight_SE), T(D.Circle), T(D.Shelf_N), T(D.Shelf_SE)],
+                        [T(D.Shelf_N),  T(D.Wheel_N), T(D.Circle), T(D.Shelf_NW)],
+                        [T(D.Shelf_SE), T(D.Shelf_S), T(D.Bent_N), T(D.Void)],
+                        [T(D.Circle), T(D.Shelf_SW), T(D.Void), T(D.Void)]
                     ]
         self.tiles = []
         for j in range(4):
