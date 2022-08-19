@@ -2,7 +2,6 @@ from hexTiles.Hexagon import Hexagon
 
 class BentHallway(Hexagon):
     def __init__(self, orientation):
-        self.optional_openings = {"U", "D"}
         if orientation == "N":
             self.sprite = (2, 0)
             self.orientation = "N"
@@ -29,6 +28,10 @@ class BentHallway(Hexagon):
             self.openings = {"SW", "N"}
         else:
             raise WrongOrientationError
+        self.openings.add("U")
+        self.openings.add("D")
+        self.category = "Hall"
+        self.super()
 
     def requirements(self):
         # Must have at least one stairway connection

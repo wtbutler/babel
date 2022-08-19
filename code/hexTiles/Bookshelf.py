@@ -2,7 +2,6 @@ from hexTiles.Hexagon import Hexagon
 
 class Bookshelf(Hexagon):
     def __init__(self, orientation):
-        self.optional_openings = {"U"}
         if orientation == "N":
             self.sprite = (3, 0)
             self.orientation = "N"
@@ -29,6 +28,9 @@ class Bookshelf(Hexagon):
             self.openings = {"SW", "N"}
         else:
             raise WrongOrientationError
+        self.openings.add("U")
+        self.category = "Shelf"
+        self.super()
 
     def requirements(self):
         # Must have at least one stairway connection
