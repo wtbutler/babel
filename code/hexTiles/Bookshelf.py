@@ -29,8 +29,14 @@ class Bookshelf(Hexagon):
         else:
             raise WrongOrientationError
         self.openings.add("U")
-        self.category = "Shelf"
         self.super()
+        for opening, s in self.barrier_options.items():
+            if opening in self.openings:
+                self.barrier_options[opening].add("Gap")
+            else:
+                self.barrier_options[opening].add("Wall")
+        self.barrier_options["U"].add("Wall")
+        self.category = "Shelf"
 
     def requirements(self):
         # Must have at least one stairway connection

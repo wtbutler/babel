@@ -12,10 +12,17 @@ class WheelHallway(Hexagon):
             self.openings = {"N", "SE", "SW"}
         else:
             raise WrongOrientationError
+        self.super()
+        self.barrier_options["U"].add("Stairs")
+        self.barrier_options["D"].add("Stairs")
+        for opening, s in self.barrier_options.items():
+            if opening in self.openings:
+                self.barrier_options[opening].add("Gap")
+            else:
+                self.barrier_options[opening].add("Wall")
         self.openings.add("U")
         self.openings.add("D")
         self.category = "Hall"
-        self.super()
 
     def requirements(self):
         # Must have at least one stairway connection

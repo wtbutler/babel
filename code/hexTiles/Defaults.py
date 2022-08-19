@@ -51,32 +51,10 @@ class Defaults:
             pass
 
     for hexTile in options:
-        if hexTile.category == "Circle":
-            for consider in options:
-                for direct in directions:
-                    print()
-                    print(hexTile, consider, direct)
-                    if direct in hexTile.openings:
-                        if links[direct] in consider.openings:
-                            if consider.category == "Hall" and (direct == "U" or direct == "D"):
-                                print("\tCan't connect stairs to circle")
-                                continue
-                            print("\tValid Connection")
-                        else:
-                            print("\tOne way hexTile")
-                    else:
-                        if links[direct] not in consider.openings:
-                            print("\tAnti Connection")
-                        else:
-                            print("\tOne way consider")
-        elif hexTile.category == "Hall":
-            pass
-        elif hexTile.category == "Shelf":
-            pass
-        elif hexTile.category == "Void":
-            pass
-        else:
-            print("Something has gone horribly horribly wrong")
-            raise FatalError
-            
-    exit()
+        for consider in options:
+            for direct in directions:
+                aBarriers = hexTile.barrier_options[direct]
+                bBarriers = consider.barrier_options[links[direct]]
+                overlap = aBarriers.intersection(bBarriers)
+                if overlap:
+                    hexTile.options[direct].add(consider)
