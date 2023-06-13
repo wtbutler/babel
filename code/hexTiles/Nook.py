@@ -1,35 +1,16 @@
 from hexTiles.Hexagon import Hexagon
 
-class Bookshelf(Hexagon):
+class Nook(Hexagon):
     def __init__(self, orientation):
         self.super()
-        if orientation == "N":
-            self.sprite = (3, 0)
-            self.orientation = "N"
-            self.openings = {"NW", "NE"}
-        elif orientation == "NE":
-            self.sprite = (3, 1)
-            self.orientation = "NE"
-            self.openings = {"N", "SE"}
-        elif orientation == "SE":
-            self.sprite = (3, 2)
-            self.orientation = "SE"
-            self.openings = {"NE", "S"}
-        elif orientation == "S":
-            self.sprite = (3, 3)
-            self.orientation = "S"
-            self.openings = {"SE", "SW"}
-        elif orientation == "SW":
-            self.sprite = (3, 4)
-            self.orientation = "SW"
-            self.openings = {"S", "NW"}
-        elif orientation == "NW":
-            self.sprite = (3, 5)
-            self.orientation = "NW"
-            self.openings = {"SW", "N"}
+        order = ["N", "NE", "SE", "S", "SW", "NW"]
+        if orientation in order:
+            self.sprite = (4, order.index(orientation))
+            self.orientation = orientation
+            self.openings = {orientation}
         else:
             raise WrongOrientationError
-        self.weight = 2
+        self.weight = 0.1
         for opening, s in self.barrier_options.items():
             if opening in self.openings:
                 self.barrier_options[opening].add("Walkway")

@@ -2,14 +2,10 @@ from hexTiles.Hexagon import Hexagon
 
 class Void(Hexagon):
     def __init__(self):
-        self.sprite = (0, 1)
+        self.super()
+        self.sprite = (0, 2)
         self.orientation = "N"
         self.openings = set()
-        self.super()
-        for opening, s in self.barrier_options.items():
-            self.barrier_options[opening].add("Wall")
+        for d, s in self.barrier_options.items():
+            s.add("Wall")
         self.category = "Void"
-
-    def requirements(self):
-        # Must have at least one stairway connection
-        return

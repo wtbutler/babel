@@ -1,7 +1,8 @@
-from hexTiles.Hexagon import Hexagon
+from hexTiles.Hallway import Hallway
 
-class BentHallway(Hexagon):
+class BentHallway(Hallway):
     def __init__(self, orientation):
+        self.super()
         if orientation == "N":
             self.sprite = (2, 0)
             self.orientation = "N"
@@ -28,18 +29,13 @@ class BentHallway(Hexagon):
             self.openings = {"SW", "N"}
         else:
             raise WrongOrientationError
-        self.super()
         self.barrier_options["U"].add("Stairs")
         self.barrier_options["D"].add("Stairs")
         for opening, s in self.barrier_options.items():
             if opening in self.openings:
-                self.barrier_options[opening].add("Gap")
+                self.barrier_options[opening].add("Corridor")
             else:
                 self.barrier_options[opening].add("Wall")
         self.openings.add("U")
         self.openings.add("D")
         self.category = "Hall"
-
-    def requirements(self):
-        # Must have at least one stairway connection
-        return

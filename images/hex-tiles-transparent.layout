@@ -1,0 +1,4 @@
+; void; wheel
+(straight) n; ne; se
+(bent) n; ne; se; s; sw; nw
+(shelf) n; ne; se; s; sw; nw

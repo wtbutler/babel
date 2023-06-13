@@ -29,3 +29,8 @@
             * Just slices, not vertical chunks?
             * triangular or rhomboid?
                 * rhomboid tiles cleanly, but triangular loads less
+
+## 8-19-22 afternoon
+* Set up possibility propagation system
+    * maybe come up with visual debug tools?
+* Set up system to collapse possibilities

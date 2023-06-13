@@ -1,8 +1,9 @@
 from hexTiles import WheelHallway, StraightHallway, BentHallway
 from hexTiles import Circle, Void
-from hexTiles import Bookshelf
+from hexTiles import Bookshelf, Nook
 
 class Defaults:
+    # TODO: make an elbow hex
     Wheel_N = WheelHallway.WheelHallway("N")
     Wheel_S = WheelHallway.WheelHallway("S")
 
@@ -27,14 +28,21 @@ class Defaults:
     Shelf_SW = Bookshelf.Bookshelf("SW")
     Shelf_NW = Bookshelf.Bookshelf("NW")
 
-    options = {Wheel_N, Wheel_S,
+    Nook_N  = Nook.Nook("N")
+    Nook_NE = Nook.Nook("NE")
+    Nook_SE = Nook.Nook("SE")
+    Nook_S  = Nook.Nook("S")
+    Nook_SW = Nook.Nook("SW")
+    Nook_NW = Nook.Nook("NW")
+
+    all_prototypes = {Wheel_N, Wheel_S,
                 Straight_N, Straight_NE, Straight_SE,
                 Bent_N, Bent_NE, Bent_SE, Bent_S, Bent_SW, Bent_NW,
                 Circle, Void,
-                Shelf_N, Shelf_NE, Shelf_SE, Shelf_S, Shelf_SW, Shelf_NW
+                Shelf_N, Shelf_NE, Shelf_SE, Shelf_S, Shelf_SW, Shelf_NW,
+                Nook_N, Nook_NE, Nook_SE, Nook_S, Nook_SW, Nook_NW
               }
 
-    categories = {"Hall", "Shelf", "Circle", "Void"}
     directions = {"U", "D", "N", "NE", "SE", "S", "SW", "NW"}
 
     links = {   "U":"D",
@@ -46,15 +54,13 @@ class Defaults:
                 "SW":"NE",
                 "NW":"SE"}
 
-    for hexTile in options:
-        for option in hexTile.options:
-            pass
+    barriers = {"Wall", "Gap", "Stairs", "Corridor", "Walkway"}
 
-    for hexTile in options:
-        for consider in options:
+    for hexTile in all_prototypes:
+        for consider in all_prototypes:
             for direct in directions:
                 aBarriers = hexTile.barrier_options[direct]
                 bBarriers = consider.barrier_options[links[direct]]
                 overlap = aBarriers.intersection(bBarriers)
                 if overlap:
-                    hexTile.options[direct].add(consider)
+                    hexTile.neighbor_options[direct].add(consider)
